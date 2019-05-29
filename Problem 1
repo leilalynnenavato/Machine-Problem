@@ -1,0 +1,129 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+
+#define SIZE 50 // this corresponds to the number of students
+
+using namespace std;
+
+int main ()
+{
+	string name[SIZE];	//stores the name of 50 students with a maximum of 50 characters
+	double quiz[9], total, percent; // for storing scores of 9 quizzes
+	double pretest[9], total2, percent2; // for storing scores of 9 pretests
+	double probset[3], total3; // for storing scores of probset
+	double prelims, percent4; // for storing score for prelim
+	double finals, percent5; // for storing score for finals
+	double finalgrade[SIZE]; // for storing of final raw grade
+	
+	cout << "Please enter the Surname with the initial of the First Name.\n(e.g. PangalimanM)" << endl;
+	for (int a = 0; a < SIZE; a++)
+	{
+		total = 0;
+		total2 = 0;
+		total3 = 0;
+		cout << "\nEnter the name of the student: "; cin >> name[a];
+		cout << endl << "	Quizzes\n";
+		for (int b = 0; b < 9; b++)  // loop to get the total score for quizzes
+		{
+			cout << "Enter Scores for Quizzes " << b+1 << " ( / 50): "; cin >> quiz[b];
+			total += quiz[b];
+		}
+		percent = (total/450)*.30*100; // equation for the raw score of quizzes accounting 30% of the final grade
+		cout << "\nRaw Score for Quizzes: "<< percent << "\n\n";
+		cout << "	Activities\n";
+		for (int c = 0; c < 9; c++) // loop to get the total score for pretests
+		{
+			cout << "Enter Scores for Pretests " << c + 1 << " ( / 100): "; cin >> pretest[c];
+			total2 += pretest[c];
+		}
+		cout<<endl;
+		for (int d = 0; d < 3; d++) // loop to get the total score for probsets
+		{
+			cout << "Enter Scores for Probsets " << d + 1 << " ( / 150): "; cin >> probset[d];
+			total3 += probset[d];
+		}
+		percent2 = ((total2 + total3)/(900+450))*.15*100; // equation for the raw score of activities accounting 15% of the final grade
+		cout << "\nRaw Score for Activities: " << percent2 << "\n";
+		
+		prelims = 0;
+		cout << "\nEnter Prelim Score ( / 100): "; cin >> prelims;
+		percent4 = (prelims/100)*.25*100; // equation for the raw score of prelims accounting 25% of the final grade
+		cout << "Raw Score for Prelims: " << percent4 << "\n";
+		
+		finals = 0;
+		cout << "\nEnter Final Score ( / 100): "; cin >> finals;
+		percent5 = (finals/100)*.30*100; // equation for the raw score of finals accounting 30% of the final grade
+		cout << "Raw Score for Finals is: " << percent5 << "\n";
+		
+		finalgrade[a] = percent+percent2+percent4+percent5; // summation of raw scores to output final raw grade
+		cout << "\nRaw Grade is " << finalgrade[a] << endl;
+	}
+	
+	cout << "\n\n	Transmutated Grade Results " << endl;
+	cout << endl;
+	
+	for (int a = 0 ; a < SIZE ; a++) // loop for the output of final grades for 50 students
+	{
+		// conditional statements for the transmutation of raw grades
+		if (finalgrade[a] >= 95.57 && finalgrade[a] <= 100)
+			cout << name[a] << "'s GPA : " << "1.00\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else if (finalgrade[a] >= 91.12 && finalgrade[a] <= 95.56)
+			cout << name[a] << "'s GPA : " << "1.25\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else if (finalgrade[a] >= 86.68 && finalgrade[a] <= 91.11)
+			cout << name[a] << "'s GPA : " << "1.50\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else if (finalgrade[a] >= 82.23 && finalgrade[a] <= 86.67)
+			cout << name[a] << "'s GPA : " << "1.75\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else if (finalgrade[a] >= 77.79 && finalgrade[a] <= 82.22)
+			cout << name[a] << "'s GPA : " << "2.00\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else if (finalgrade[a] >= 73.34 && finalgrade[a] <= 77.78)
+			cout << name[a] << "'s GPA : " << "2.25\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else if (finalgrade[a] >= 68.90 && finalgrade[a] <= 73.33)
+			cout << name[a] << "'s GPA : " << "2.50\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else if (finalgrade[a] >= 64.45 && finalgrade[a] <= 68.89)
+			cout << name[a] << "'s GPA : " << "2.75\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else if (finalgrade[a] >= 60.00 && finalgrade[a] <= 64.44)
+			cout << name[a] << "'s GPA : " << "3.00\n  Raw grade of " << finalgrade[a] << "\n  PASSED" << endl;
+			
+		else
+			cout << name[a] << " : " << "5.00\n  Raw grade of " << finalgrade[a] << "\n  FAILED\n\n" << endl;
+	}
+	
+	int i = 0;
+	while (i < 49) // loop for sorting top 10 students
+	{
+		int j = 0;
+		while (j < 49-i)
+		{
+			if (finalgrade[j] < finalgrade[j+1])
+			{
+				double temp_grade = finalgrade[j];
+				finalgrade[j] = finalgrade[j+1];
+				finalgrade[j+1] = temp_grade;
+				
+				string temp_name = name[j];
+				name[j] = name[j+1];
+				name[j+1] = temp_name;
+			} 
+			++j;
+		}
+		++i;	
+	}
+	
+		cout<< "\n\nTop 10:\n";
+	for (int i = 0; i < 10; ++i) // loop for the output of the top 10 students
+	{
+		cout<< i+1 <<". "<< name[i] << ": "<< finalgrade[i];
+		cout << endl;
+	}
+	
+	return 0;
+}
