@@ -1,0 +1,105 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{
+	double  a, b, c, area, s, perimeter, apothem, circumcenter;	// a, b, c corresponds to the sides of the triangle; s = semiperimeter
+	bool exit = false;
+	
+	cout << "Enter three sides of a triangle (in meters): \n";
+	cout << "Side A = "; cin >> a; // inputs the measurement on side A
+	cout << "Side B = "; cin >> b; // inputs the measurement on Side B
+	cout << "Side C = "; cin >> c; // inputs the measurement on Side C
+	
+	double x, y, z, angA, angB, angC; // x, y, z corresponds the values inside the inverse trigonometric functions
+	
+	do{
+	
+	if ((a+b)>c && (b+c)>a && (a+c)>b)
+	{
+		x = (pow(b,2)+pow(c,2)-pow(a,2))/(2*b*c); // formula for the value inside the arccosine function for angle A
+		angA = (acos(x))*(180/3.141592654); // formula the angle A in degrees
+		y = (pow(c,2)+pow(a,2)-pow(b,2))/(2*a*c); // formula for the value inside the arccosine function for angle B
+		angB = (acos(y))*(180/3.141592654); // formula the angle B in degrees
+		z = (pow(a,2)+pow(b,2)-pow(c,2))/(2*a*b); // formula for the value inside the arccosine function for angle C
+		angC = (acos(z))*(180/3.141592654); // formula the angle C in degrees
+		
+		cout<< "\n";
+		cout << "The Interior Angles between Side A and B is " << angC << " degrees.\n"; // displays the angle C
+		cout << "The Interior Angles between Side B and C is " << angA << " degrees.\n"; // displays the angle A
+		cout << "The Interior Angles between Side A and C is " << angB << " degrees.\n"; // displays the angle B
+	
+		// conditional statements to identify what type the triangle is, given its sides
+		cout<< "\n";
+		if (a == b && b == c && a == c) // all sides are equal
+		{
+			if (a > 0 && b > 0 && c > 0)
+				cout << "The triangle is an EQUILATERAL triangle.\n";
+			else
+				cout << "Invalid input.";
+		}
+			
+		else if (a == b || b == c || a == c) // at least two sides are equal
+		{
+			if (a > 0 && b > 0 && c > 0)
+				cout << "The triangle is an ISOSCELES triangle.\n";
+			else
+				cout << "Invalid input.";
+		}
+		
+		else // all sides are different
+		{
+			if (a > 0 && b > 0 && c > 0)
+				cout << "The triangle is a SCALENE triangle.\n";
+			else
+				cout << "Invalid input.";		
+		}
+	
+		perimeter = a + b + c;
+		s = perimeter / 2;
+		area = sqrt(s*(s-a)*(s-b)*(s-c)); // area of any triangle using Heron's law
+		
+		cout<< "\n";
+		
+		cout << "It's area is " << area << "m^2\n";
+		cout << "It's perimeter is " << perimeter << "m\n";
+	
+		// conditional statements indentifying  whether it is acute, right or obtuse triangle
+		cout<< "\n";
+		if (angA == 90 || angB == 90 || angC == 90) // outputs a right angle triangle
+			cout << "The triangle is a RIGHT triangle.\n";
+	
+		else if (angA <= 90 || angB <= 90 || angC <=90) // outputs an acute triangle
+			cout << "The triangle is an ACUTE triangle.\n";
+	
+		else	// outputs an obtuse triangle
+			cout << "The triangle is an OBTUSE triangle.\n";
+		
+		cout<< "\n";
+		if (a == b && a == c)
+		{
+			apothem = (a / (2 * sqrt(3))); // apothem is only for regular polygon 
+			cout << "The apothem is " << apothem << "m." << endl;
+			circumcenter = (((a +b + c)/3) / sqrt(3));  // formula of circumcenter
+			cout << "The radius of the circumcenter is " << circumcenter << "m.";
+		}
+	
+		if (a != b || a != c) 
+		{
+			cout << "There is no apothem." << endl;
+			circumcenter - (((a*b*c)/(sqrt((perimeter)*(b+c-a)*((c+a-b)*(a+c-c)))))); // formula of circumcenter for non-regular polygon
+			cout << "The radius of the circumcenter is " << circumcenter << "m.";
+		}
+	}
+	
+	else
+		cout << "The sum of two sides must be larger than the one side to form a triangle, according to the Triangle Inequality Theorem.";
+		exit = true;
+		
+	} while(!exit);
+	
+		
+	return 0;
+}
